@@ -1,3 +1,53 @@
+# azselfserviceportal
+
+Full-stack self-service portal scaffold (React frontend, Node/Express backend, Terraform templates, PostgreSQL schema, GitHub Actions CI/CD).
+
+## Structure
+- `/frontend` - React + Material UI dashboard
+- `/backend` - Node.js Express API (Terraform runner, DB integration)
+- `/terraform` - Sample Azure and AWS Terraform templates
+- `/db` - PostgreSQL schema and seed samples
+
+## Quick start
+
+1. Install dependencies:
+
+```bash
+cd frontend
+npm install
+cd ../backend
+npm install
+```
+
+2. Start backend (dev):
+
+```bash
+cd backend
+npm run dev
+```
+
+3. Start frontend (dev):
+
+```bash
+cd frontend
+npm start
+```
+
+## Git / GitHub
+
+Initialize a repo and push to GitHub:
+
+```bash
+git init
+git add .
+git commit -m "Initial scaffold: frontend, backend, terraform, db"
+gh repo create azselfserviceportal --public --source=. --remote=origin
+git push -u origin main
+```
+
+## Notes
+- The Terraform runner uses child processes; configure remote state backends and credentials before running `apply`.
+- Fill `.env` in `/backend` for DB and Azure AD settings.
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
