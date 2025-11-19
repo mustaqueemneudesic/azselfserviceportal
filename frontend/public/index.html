@@ -6,6 +6,19 @@
     <title>AZ Self Service Portal</title>
   </head>
   <body>
+    <script>
+      // Lightweight SPA callback handler: store tokens sent in fragment and redirect home
+      if (location.pathname === '/auth/callback') {
+        try {
+          const hash = location.hash.startsWith('#') ? location.hash.slice(1) : location.hash;
+          const params = new URLSearchParams(hash);
+          if (params.get('id_token')) localStorage.setItem('id_token', params.get('id_token'));
+          if (params.get('access_token')) localStorage.setItem('access_token', params.get('access_token'));
+          if (params.get('name')) localStorage.setItem('user_name', decodeURIComponent(params.get('name')));
+        } catch(e) {}
+        location.href = '/';
+      }
+    </script>
     <div id="root"></div>
   </body>
 </html>

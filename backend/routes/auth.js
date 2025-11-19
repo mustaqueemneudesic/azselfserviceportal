@@ -34,7 +34,15 @@ router.get('/callback', async (req, res) => {
   };
   try{
     const response = await cca.acquireTokenByCode(tokenRequest);
-    // In production, set a secure cookie or session; here return JSON for demo
+    // In production, set a secure cookie or session; for SPA redirect back with tokens in fragment
+    const frontend = process.env.FRONTEND_URL || 'http://localhost:3000';
+    if (response && (response.idToken || response.accessToken)){
+      const idToken = encodeURIComponent(response.idToken || '');
+      const accessToken = encodeURIComponent(response.accessToken || '');
+      const name = encodeURIComponent((response.account && response.account.name) || '');
+      return res.redirect(`${frontend}/auth/callback#id_token=${idToken}&access_token=${accessToken}&name=${name}`);
+    }
+    // fallback: return JSON
     res.json(response);
   }catch(e){ res.status(500).json({ error: e.message }); }
 });
